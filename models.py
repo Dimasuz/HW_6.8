@@ -1,17 +1,14 @@
-import atexit
-from sqlalchemy import Column, Integer, String, create_engine
+from sqlalchemy import Column, Integer, String
+from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
 
-PG_DSN='sqlite:///sqlite3.db'
+
+PG_DSN = "postgresql+asyncpg://app:123@127.0.0.1:5431/homework"
 
 
-def get_engine():
-    return create_engine(PG_DSN)
-
-
-engine = get_engine()
+engine = create_async_engine(PG_DSN)
 
 
 Base = declarative_base()
@@ -24,7 +21,7 @@ class People(Base):
     id = Column(Integer, primary_key=True)
     birth_year = Column(String(200))
     eye_color = Column(String(200))
-    films = Column(String(200))
+    films = Column(String(400))
     gender = Column(String(200))
     hair_color = Column(String(200))
     height = Column(String(200))
@@ -32,18 +29,9 @@ class People(Base):
     mass = Column(String(200))
     name = Column(String(200))
     skin_color = Column(String(200))
-    species = Column(String(200))
-    starships = Column(String(200))
-    vehicles = Column(String(200))
+    species = Column(String(300))
+    starships = Column(String(300))
+    vehicles = Column(String(300))
 
 
-Base.metadata.create_all(bind=engine)
-
-
-def get_session_maker():
-    return sessionmaker(bind=engine)
-
-
-Session = get_session_maker()
-
-atexit.register(engine.dispose)
+Session = sessionmaker(bind=engine, class_=AsyncSession, expire_on_commit=False)
