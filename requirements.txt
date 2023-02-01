@@ -2,4 +2,5 @@ aiohttp
 more_itertools
 sqlalchemy
 asyncpg
+aiosqlite
 requests

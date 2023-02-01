@@ -2,13 +2,13 @@ from sqlalchemy import Column, Integer, String
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
+from config import PG_DSN_ASYNC
 
 
 
-PG_DSN = "postgresql+asyncpg://app:123@127.0.0.1:5431/homework"
 
 
-engine = create_async_engine(PG_DSN)
+engine = create_async_engine(PG_DSN_ASYNC)
 
 
 Base = declarative_base()
